@@ -59,7 +59,7 @@ export default function Navbar() {
                             cursor: 'pointer', position: 'absolute', top: '-55px', left: '-20px',
                             transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
                         }}>
-                            <Image src="/Screenshot 2026-02-15 170218.jpg" alt="Spectrum Logo" width={170} height={170} style={{ objectFit: 'contain', filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.08))' }} priority />
+                            <Image src="/spectrum_white.png" alt="Spectrum Logo" width={120} height={120} style={{ objectFit: 'contain', filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.08))' }} priority />
                         </div>
                     </Link>
                     
@@ -157,3 +157,4 @@ export default function Navbar() {
         </>
     );
 }
+
