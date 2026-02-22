@@ -1,165 +1,206 @@
 "use client";
 import React from 'react';
-import Image from 'next/image';
-import SpringPetals from '../../components/SpringPetals'; // The animated cherry blossoms
+import Navbar from '@/components/Navbar';
+import SpringPetals from '@/components/SpringPetals';
 
-// Event Data - You can move this to a JSON file later!
-const eventsData = [
-  {
-    id: 1,
-    category: "Live Art",
-    categoryColor: "#ff8fa3", // Sakura Pink
-    title: "Brushstrokes in the Breeze",
-    date: "Feb 27, 2026 • 10:00 AM",
-    description: "A timed live-painting competition under the open sky. Watch artists race against the clock to bring blank canvases to life.",
-    image: "/WhatsApp Image 2026-02-19 at 13.47.13.jpeg" // Using your uploaded image
-  },
-  {
-    id: 2,
-    category: "Photography",
-    categoryColor: "#b5c9a7", // Sage Green
-    title: "The Golden Hour Photowalk",
-    date: "Feb 27, 2026 • 4:30 PM",
-    description: "Join us for a guided photowalk across the PEC campus during the golden hour to capture the perfect spring light.",
-    image: "/WhatsApp Image 2026-02-19 at 13.47.13 (1).jpeg" // Using your uploaded image
-  },
-  {
-    id: 3,
-    category: "Exhibition",
-    categoryColor: "#f4a261", // Warm Sun
-    title: "A Series of Masterpieces",
-    date: "Feb 28, 2026 • All Day",
-    description: "The grand finale. Walk through our curated glasshouse gallery featuring the best submissions from across the nation.",
-    image: "/WhatsApp Image 2026-02-19 at 13.47.13 (2).jpeg" // Using your uploaded image
-  }
-];
+// --- TypeScript Interfaces ---
+interface CompetitionProps {
+    day: string;
+    title: string;
+    description: string;
+    highlight: string;
+    color: string;
+    isFinale?: boolean;
+}
+
+interface EventTrackProps {
+    categoryName: string;
+    icon: React.ReactNode;
+    color: string;
+    competitions: Omit<CompetitionProps, 'color'>[];
+}
 
 export default function EventsPage() {
   return (
-    <main style={{ minHeight: '100vh', paddingBottom: '120px', position: 'relative' }}>
-      
-      {/* Background Petal Animation */}
+    <main style={{ position: 'relative', zIndex: 1, minHeight: '100vh', paddingBottom: '120px' }}>
       <SpringPetals />
+      <Navbar />
 
-      {/* Page Header */}
+      {/* --- HERO SECTION --- */}
       <header style={{ 
-          maxWidth: '1200px', margin: '0 auto', 
-          padding: '180px 20px 80px 20px', textAlign: 'center', position: 'relative', zIndex: 1 
+          paddingTop: '180px', paddingBottom: '80px', paddingInline: '20px',
+          textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center',
+          position: 'relative', zIndex: 10 
       }}>
-          <h2 style={{ fontSize: '1.2rem', color: '#ff8fa3', fontWeight: 600, letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '15px' }}>
-              The Spring Lineup
-          </h2>
-          <h1 style={{ fontSize: '4.5rem', color: 'var(--text-forest)', lineHeight: 1.1, fontFamily: 'Playfair Display, serif' }}>
-              Competitions & <br />
-              <span style={{ fontStyle: 'italic', color: 'var(--accent-leaf)' }}>Exhibitions.</span>
+          <h1 style={{ 
+              fontSize: 'clamp(3.5rem, 10vw, 6rem)', 
+              fontWeight: 900, 
+              color: 'var(--text-slate)', 
+              lineHeight: 0.9,
+              letterSpacing: '-2px',
+              fontFamily: 'var(--font-playfair), serif',
+              marginBottom: '15px'
+          }}>
+              THE BATTLES
           </h1>
+          <p style={{ fontSize: '1.2rem', color: 'var(--spring-blush)', letterSpacing: '6px', fontWeight: 800, textTransform: 'uppercase' }}>
+              Two Tracks. Two Days. One Champion.
+          </p>
+          <div style={{ width: '100px', height: '4px', backgroundColor: 'var(--spring-sage)', borderRadius: '50px', marginTop: '30px' }} />
       </header>
 
-      {/* Events Grid */}
-      <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px', position: 'relative', zIndex: 1 }}>
-        <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
-            gap: '50px' 
-        }}>
-          {eventsData.map((event) => (
-            <div key={event.id} className="event-canvas" style={{
-                background: 'var(--glass-dew)',
-                backdropFilter: 'blur(24px)',
-                borderRadius: '24px',
-                padding: '24px',
-                border: '1px solid var(--border-dew)',
-                boxShadow: '0 15px 35px rgba(181, 201, 167, 0.15)',
-                transition: 'all 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column'
-            }}>
-                
-                {/* The "Framed Canvas" Image Area */}
-                <div style={{ 
-                    width: '100%', 
-                    height: '250px', 
-                    borderRadius: '16px', 
-                    overflow: 'hidden', 
-                    position: 'relative',
-                    marginBottom: '24px'
-                }}>
-                    <Image 
-                        src={event.image} 
-                        alt={event.title} 
-                        fill 
-                        className="event-image"
-                        style={{ objectFit: 'cover', transition: 'transform 0.7s ease' }} 
-                    />
-                    
-                    {/* Floating Category Tag */}
-                    <div style={{
-                        position: 'absolute',
-                        top: '16px', left: '16px',
-                        background: 'rgba(255,255,255,0.9)',
-                        color: event.categoryColor,
-                        padding: '6px 16px',
-                        borderRadius: '50px',
-                        fontSize: '0.8rem',
-                        fontWeight: 800,
-                        letterSpacing: '1px',
-                        textTransform: 'uppercase',
-                        boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
-                    }}>
-                        {event.category}
-                    </div>
-                </div>
+      {/* --- EVENTS TRACKS GRID --- */}
+      <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px', position: 'relative', zIndex: 10 }}>
+          
+          {/* Responsive Grid for the Two Tracks */}
+          <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+              gap: '60px'
+          }}>
+              
+              {/* 1. THE ART TRACK */}
+              <EventTrack 
+                  categoryName="Fine Arts Event" 
+                  color="var(--spring-blush)" // Pink Theme
+                  icon={<svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>}
+                  competitions={[
+                      {
+                          day: "DAY 1 • PRELIMS",
+                          title: "Live Sketching Battle",
+                          description: "Bring your pencils and raw talent. Participants will compete in a timed, live sketching competition to prove their foundational skills.",
+                          highlight: "Open to all registered artists."
+                      },
+                      {
+                          day: "DAY 2 • FINALE",
+                          title: "Themed Sunboard Art",
+                          description: "A secret theme will be revealed on the spot. Candidates must create a masterpiece on a provided sunboard using their medium of choice.",
+                          highlight: "Only for Day 1 Qualifiers. Sunboards provided by APC.",
+                          isFinale: true
+                      }
+                  ]}
+              />
 
-                {/* Event Details */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ fontSize: '0.9rem', color: 'var(--text-moss)', fontWeight: 600, marginBottom: '8px' }}>
-                        {event.date}
-                    </div>
-                    <h3 style={{ fontSize: '2rem', color: 'var(--text-forest)', marginBottom: '16px', fontFamily: 'Playfair Display, serif', lineHeight: 1.2 }}>
-                        {event.title}
-                    </h3>
-                    <p style={{ color: 'var(--text-moss)', lineHeight: 1.7, fontSize: '1rem', marginBottom: '24px', flex: 1 }}>
-                        {event.description}
-                    </p>
-                    
-                    {/* Action Link */}
-                    <div style={{ 
-                        marginTop: 'auto', 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '8px', 
-                        color: event.categoryColor, 
-                        fontWeight: 700,
-                        fontSize: '0.95rem'
-                    }}>
-                        View Details <span className="arrow" style={{ transition: 'transform 0.3s' }}>→</span>
-                    </div>
-                </div>
+              {/* 2. THE PHOTOGRAPHY TRACK */}
+              <EventTrack 
+                  categoryName="Photography Event" 
+                  color="var(--spring-sage)" // Green Theme
+                  icon={<svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="8" width="18" height="12" rx="2" ry="2"></rect><path d="M16 8v-2a2 2 0 0 0-2-2H10a2 2 0 0 0-2 2v2"></path><circle cx="12" cy="14" r="3"></circle></svg>}
+                  competitions={[
+                      {
+                          day: "DAY 1 • PRELIMS",
+                          title: "Product Photography",
+                          description: "Test your lighting and composition skills. We provide the product, you provide the vision. Make everyday objects look editorial.",
+                          highlight: "Products will be provided on the spot."
+                      },
+                      {
+                          day: "DAY 2 • FINALE",
+                          title: "The Photo Story",
+                          description: "A true test of visual storytelling. Capture a cohesive series of images around the campus that narrate a compelling story without words.",
+                          highlight: "Only for Day 1 Qualifiers. Gear not restricted.",
+                          isFinale: true
+                      }
+                  ]}
+              />
 
-            </div>
-          ))}
-        </div>
+          </div>
       </section>
-
-      {/* We inject the CSS for the hover effects directly into the page to keep it self-contained */}
-      <style dangerouslySetInnerHTML={{__html: `
-        .event-canvas:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 30px 60px rgba(181, 201, 167, 0.3);
-            border-color: #ffffff;
-        }
-        
-        /* Slow zoom on the image when hovering the card */
-        .event-canvas:hover .event-image {
-            transform: scale(1.08);
-        }
-
-        /* Nudge the arrow forward on hover */
-        .event-canvas:hover .arrow {
-            transform: translateX(5px);
-        }
-      `}} />
     </main>
   );
 }
+
+// --- SUB-COMPONENTS ---
+
+// 1. The Column Track (Holds Day 1 and Day 2 for a specific category)
+const EventTrack = ({ categoryName, icon, color, competitions }: EventTrackProps) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+        
+        {/* Track Header */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px' }}>
+            <div style={{ 
+                width: '60px', height: '60px', borderRadius: '20px', 
+                background: `${color}22`, color: color, 
+                display: 'flex', justifyContent: 'center', alignItems: 'center' 
+            }}>
+                {icon}
+            </div>
+            <h2 style={{ fontSize: '2.2rem', color: 'var(--text-slate)', fontFamily: 'var(--font-playfair), serif', fontWeight: 900 }}>
+                {categoryName}
+            </h2>
+        </div>
+
+        {/* The Competitions */}
+        {competitions.map((comp, index) => (
+            <React.Fragment key={index}>
+                <CompetitionCard 
+                    day={comp.day} title={comp.title} description={comp.description} 
+                    highlight={comp.highlight} color={color} isFinale={comp.isFinale} 
+                />
+                
+                {/* Visual Connector between Day 1 and Day 2 */}
+                {index === 0 && (
+                    <div style={{ display: 'flex', justifyContent: 'center', margin: '-15px 0' }}>
+                        <div style={{ 
+                            background: 'var(--glass-bg)', backdropFilter: 'blur(10px)',
+                            border: `2px dashed ${color}66`, padding: '8px 20px', borderRadius: '50px',
+                            color: color, fontSize: '0.75rem', fontWeight: 800, letterSpacing: '2px',
+                            zIndex: 2, display: 'flex', alignItems: 'center', gap: '10px'
+                        }}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+                            QUALIFIERS ADVANCE
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+                        </div>
+                    </div>
+                )}
+            </React.Fragment>
+        ))}
+    </div>
+);
+
+// 2. The Individual Competition Card
+const CompetitionCard = ({ day, title, description, highlight, color, isFinale }: CompetitionProps) => (
+    <div style={{
+        background: isFinale ? `${color}08` : 'var(--glass-bg)', // Slight tint for the finale card
+        backdropFilter: 'blur(20px)',
+        border: isFinale ? `2px solid ${color}55` : '1px solid var(--glass-border)',
+        borderRadius: '30px',
+        padding: '40px 30px',
+        position: 'relative',
+        transition: 'all 0.4s ease',
+        cursor: 'default',
+        boxShadow: isFinale ? `0 10px 40px ${color}15` : '0 10px 30px rgba(100, 100, 111, 0.05)'
+    }}
+    onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => {
+        e.currentTarget.style.transform = 'translateY(-5px)';
+        e.currentTarget.style.boxShadow = `0 15px 40px ${color}33`; 
+    }}
+    onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = isFinale ? `0 10px 40px ${color}15` : '0 10px 30px rgba(100, 100, 111, 0.05)';
+    }}
+    >
+        {/* Top Badge */}
+        <div style={{ display: 'inline-block', background: `${color}22`, color: color, padding: '6px 16px', borderRadius: '50px', fontWeight: 800, fontSize: '0.75rem', letterSpacing: '2px', marginBottom: '20px' }}>
+            {day}
+        </div>
+
+        {/* Title & Desc */}
+        <h3 style={{ fontSize: '1.8rem', color: 'var(--text-slate)', fontFamily: 'var(--font-playfair), serif', fontWeight: 800, marginBottom: '15px', lineHeight: 1.1 }}>
+            {title}
+        </h3>
+        <p style={{ color: 'var(--text-light)', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 500, marginBottom: '25px' }}>
+            {description}
+        </p>
+
+        {/* Highlight Note (e.g., "Sunboards Provided") */}
+        <div style={{ 
+            background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', 
+            padding: '12px 20px', borderRadius: '15px', display: 'flex', alignItems: 'flex-start', gap: '12px' 
+        }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <span style={{ color: 'var(--text-slate)', fontSize: '0.85rem', fontWeight: 700, lineHeight: 1.4 }}>
+                {highlight}
+            </span>
+        </div>
+    </div>
+);

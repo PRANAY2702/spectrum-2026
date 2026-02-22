@@ -1,28 +1,35 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import Navbar from '../components/Navbar';
+import type { Metadata } from "next";
+import { Playfair_Display, Inter } from "next/font/google";
+import "./globals.css";
+import Footer from "@/components/Footer";
+
+const playfair = Playfair_Display({ 
+  subsets: ["latin"], 
+  variable: '--font-playfair',
+  weight: ['400', '700', '900'] 
+});
+
+const inter = Inter({ 
+  subsets: ["latin"], 
+  variable: '--font-inter',
+  weight: ['400', '500', '700', '800']
+});
 
 export const metadata: Metadata = {
-  title: 'Spectrum 2026 | Art & Photography Club',
-  description: 'Annual Flagship Event of APC PEC',
+  title: "Spectrum 2026",
+  description: "The flagship annual festival of the Art & Photography Club at PEC.",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en">
-      <body>
-        <Navbar />
-        {children}
-        <footer>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textAlign: 'center', padding: '40px', position: 'relative' ,backgroundColor: '#020202', borderTop: '1px solid var(--border-dark)' }}>
-                © 2026 Art and Photography Club, PEC. All rights reserved.<br/>
-                <span style={{ color: 'var(--accent-red)', fontFamily: 'Oswald', marginTop: '10px', display: 'inline-block' }}>#CreateOrPerish</span>
-            </p>
-        </footer>
+    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+      <body style={{ fontFamily: 'var(--font-inter), sans-serif' }}>
+        {children} 
+        <Footer />
       </body>
     </html>
   );

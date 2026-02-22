@@ -55,16 +55,16 @@ export default function ContactPage() {
               <ContactCard 
                   title="Sartaj Singh" 
                   subtitle="Joint Secretary" 
-                  detail="+91 XXXXX XXXXX" // <-- UPDATE THIS NUMBER
-                  link="tel:+910000000000" 
+                  detail="+91 86995 58869" // <-- UPDATE THIS NUMBER
+                  link="tel:+918699558869" 
                   color="var(--spring-sage)" 
                   type="phone" 
               />
               <ContactCard 
                   title="Akshay Sharma" 
                   subtitle="Secretary" 
-                  detail="+91 XXXXX XXXXX" // <-- UPDATE THIS NUMBER
-                  link="tel:+910000000000" 
+                  detail="+91 78809-95074" // <-- UPDATE THIS NUMBER
+                  link="tel:+917880995074" 
                   color="var(--spring-sky)" 
                   type="phone" 
               />
